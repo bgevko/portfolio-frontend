@@ -29,7 +29,7 @@ function ViewBlogArticle( { article } ) {
   const [dialogResponse, setDialogResponse] = useState(null);
   const [formOpen, setFormOpen] = useState(false);
 
-  const { blog, updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage } = useContext(GlobalContext, baseUrl);
+  const { blog, updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage, baseUrl } = useContext(GlobalContext);
   const redirect = useNavigate();
   
   const handleEdit = () => {
