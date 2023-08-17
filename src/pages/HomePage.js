@@ -1,6 +1,4 @@
-import { React, useRef, useContext, useState, useEffect } from 'react';
-import { GlobalContext } from '../GlobalContext';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { React, useRef} from 'react';
 import selfie from '../images/selfie.webp'
 import MoreContent from '../components/MoreContent';
 import ArticlePreview from '../components/ArticlePreview';
