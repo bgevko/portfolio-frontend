@@ -53,7 +53,7 @@ function ViewBlogArticle( { article } ) {
 
 
   const handleDeleteArticle = async () => {
-    const response = await fetch(`/blog/${article?.title}`, {
+    const response = await fetch(`/blog/${article?._id}`, {
       method: 'DELETE'
     });
 

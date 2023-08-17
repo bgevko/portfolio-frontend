@@ -30,7 +30,7 @@ function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true
   }
 
   const handleDeleteArticle = async () => {
-    const response = await fetch(`${baseUrl}/blog/${article?.title}`, {
+    const response = await fetch(`${baseUrl}/blog/${article?._id}`, {
       method: 'DELETE'
     });
 
