@@ -35,7 +35,6 @@ function App() {
   }
   
   const baseUrl = process.env.REACT_APP_API_URL
-  // set to localhost 3000 for dev
   // const baseUrl = 'http://localhost:3000'
   
   // send a GET request to the server to acquire all blogs
