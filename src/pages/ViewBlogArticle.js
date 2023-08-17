@@ -29,7 +29,7 @@ function ViewBlogArticle( { article } ) {
   const [dialogResponse, setDialogResponse] = useState(null);
   const [formOpen, setFormOpen] = useState(false);
 
-  const { blog, updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage } = useContext(GlobalContext);
+  const { blog, updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage } = useContext(GlobalContext, baseUrl);
   const redirect = useNavigate();
   
   const handleEdit = () => {
@@ -53,7 +53,7 @@ function ViewBlogArticle( { article } ) {
 
 
   const handleDeleteArticle = async () => {
-    const response = await fetch(`/blog/${article?._id}`, {
+    const response = await fetch(baseUrl + `/blog/${article?._id}`, {
       method: 'DELETE'
     });
 
