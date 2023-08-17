@@ -19,7 +19,7 @@ function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true
   const articleRef = useRef(null);
   const animationTime = 500; // change this to match CSS transition time
 
-  const { updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage } = useContext(GlobalContext);
+  const { updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage, baseUrl} = useContext(GlobalContext);
 
   const handleEdit = () => {
     setFormOpen(true);
@@ -30,7 +30,7 @@ function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true
   }
 
   const handleDeleteArticle = async () => {
-    const response = await fetch(`/blog/${article._id}`, {
+    const response = await fetch(`${baseUrl}/blog/${article._id}`, {
       method: 'DELETE'
     });
 

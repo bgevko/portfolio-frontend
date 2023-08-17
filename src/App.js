@@ -34,9 +34,13 @@ function App() {
     mainRef.current.scrollTo(0, 0)
   }
   
+  const baseUrl = process.env.REACT_APP_API_URL
+  // set to localhost 3000 for dev
+  // const baseUrl = 'http://localhost:3000'
+  
   // send a GET request to the server to acquire all blogs
   const getBlog = async () => {
-    const response = await fetch('/blog')
+    const response = await fetch(`${baseUrl}/blog`)
     const data = await response.json()
     updateBlog(data)
   }
@@ -85,14 +89,15 @@ function App() {
               setErrorMessage,
               setConfirmActive,
               setConfirmMessage,
-              scrollToTop
+              scrollToTop,
+              baseUrl
             }}>
               <Routes> 
                 <Route 
                   path="/" element={<HomePage article={blog[0]}/>} />
                 <Route path="/blog" element={<BlogPage blog={blog} />} />
 
-                  {blog.map((article) => (
+                  {blog.map((article, index) => (
                     <Route 
                       key={article._id} 
                       path={`/blog/${(article.title).replace(/\s+/g, '-').toLowerCase()}`} 

@@ -11,7 +11,7 @@ function ContactPage() {
     const [contactMethod, setContactMethod] = useState('');
     const [contactTime, setContactTime] = useState([]);
 
-    const { setErrorMessage, setErrorActive, setConfirmMessage, setConfirmActive, scrollToTop } = useContext(GlobalContext);
+    const { setErrorMessage, setErrorActive, setConfirmMessage, setConfirmActive, scrollToTop, baseUrl } = useContext(GlobalContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -28,7 +28,7 @@ function ContactPage() {
 
         // send a POST request to /contact
         try {
-            const response = await fetch('/contact', {
+            const response = await fetch(baseUrl + '/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

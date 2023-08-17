@@ -24,7 +24,7 @@ function BlogForm({ formOpen, setFormOpen, article}) {
   const formRef = useRef(null);
   const inputRef = useRef(null);
 
-  const { updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage } = useContext(GlobalContext)
+  const { updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage, baseUrl } = useContext(GlobalContext)
 
   useEffect(() => {
     if (formOpen) {
@@ -51,7 +51,7 @@ function BlogForm({ formOpen, setFormOpen, article}) {
 
     // If not in edit mode, send POST request to create new article
     if (!editMode) {
-      const response = await fetch('/blog', {
+      const response = await fetch(baseUrl + '/blog', {
           method: 'post',
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
@@ -80,7 +80,7 @@ function BlogForm({ formOpen, setFormOpen, article}) {
     // If in edit mode, send PUT request to update existing article
     else {
       console.log(formData)
-      const response = await fetch(`/blog/${article?._id}`, {
+      const response = await fetch(`${baseUrl}/blog/${article?._id}`, {
         method: 'PUT',
         body: JSON.stringify(formData),
         headers: { 'Content-Type': 'application/json' }

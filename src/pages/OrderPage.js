@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import Section from '../components/Section';
 
 function OrderPage() {
-    const [name, setName] = useState('Bogdan Gevko');
-    const [email, setEmail] = useState('bgevko@gmail.com');
-    const [address, setAddress] = useState('345 Main Street');
-    const [deliveryInstructions, setDeliveryInstructions] = useState('Nothing');
-    const [product, setProduct] = useState('email');
-    const [quantity, setQuantity] = useState('1');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [deliveryInstructions, setDeliveryInstructions] = useState('');
+    const [product, setProduct] = useState('');
+    const [quantity, setQuantity] = useState('');
 
-    const { setErrorMessage, setErrorActive, setConfirmMessage, setConfirmActive, scrollToTop } = useContext(GlobalContext);
+    const { setErrorMessage, setErrorActive, setConfirmMessage, setConfirmActive, scrollToTop, baseUrl } = useContext(GlobalContext);
     const redirect = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -28,7 +28,7 @@ function OrderPage() {
 
         // send a POST request to /order
         try {
-            const response = await fetch('/order', {
+            const response = await fetch(baseUrl + '/order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
