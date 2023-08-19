@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
 import { GlobalContext } from '../GlobalContext';
 import ScrimOverlay from '../components/ScrimOverlay'
 import Dialog from '../components/Dialog'
@@ -35,7 +35,7 @@ function BlogForm({ formOpen, setFormOpen, article}) {
       setContent(article ? article.content : '');
       setTags(article ? article.tags.join(', ').replaceAll(',', ', ') : '');
     }
-  }, [article, formOpen])
+  }, [article, formOpen, articleDate, today])
 
   const handleSubmitArticle = async (e) => {
     e.preventDefault();
@@ -79,7 +79,6 @@ function BlogForm({ formOpen, setFormOpen, article}) {
     
     // If in edit mode, send PUT request to update existing article
     else {
-      console.log(formData)
       const response = await fetch(`${baseUrl}/blog/${article?._id}`, {
         method: 'PUT',
         body: JSON.stringify(formData),
@@ -145,14 +144,14 @@ function BlogForm({ formOpen, setFormOpen, article}) {
     }
   }
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setArticleTitle(article ? article.title : '');
     setAuthor(article ? article.author : '');
     setPublishDate(article ? articleDate : today);
     setPreview(article ? article.preview : '');
     setContent(article ? article.content : '');
     setTags(article ? article.tags.join(', ') : '');
-  }
+  }, [article, articleDate, today])
 
   // Call closeFormPrompt when user presses escape key
   const handleKeyDown = (e) => {
@@ -173,7 +172,7 @@ function BlogForm({ formOpen, setFormOpen, article}) {
       setDialogResponse(null);
       inputRef.current.focus();
     }
-  }, [dialogResponse])
+  }, [dialogResponse, resetForm, setFormOpen])
 
   const formComponent = (
 

@@ -7,8 +7,6 @@ import ScrimOverlay from './ScrimOverlay'
 import Dialog from './Dialog'
 import BlogForm from '../components/BlogForm'
 import { CSSTransition } from 'react-transition-group';
-import { ErrorToast } from './Toasts';
-
 
 function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true}) {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -17,9 +15,7 @@ function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true
   const [inAnimation, setinAnimation] = useState(true);
 
   const articleRef = useRef(null);
-  const animationTime = 500; // change this to match CSS transition time
-
-  const { updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage, baseUrl} = useContext(GlobalContext);
+  const { handleDeleteArticle } = useContext(GlobalContext);
 
   const handleEdit = () => {
     setFormOpen(true);
@@ -29,40 +25,17 @@ function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true
     setDialogOpen(true);
   }
 
-  const handleDeleteArticle = async () => {
-    const response = await fetch(`${baseUrl}/blog/${article?._id}`, {
-      method: 'DELETE'
-    });
-
-    if (response.ok) {
-      setConfirmMessage('Article deleted.');
-      setConfirmActive(true);
-      setTimeout(() => { setConfirmActive(false) }, 3000);
-
-      // Give the component time to animate out
-      setTimeout(() => {
-        updateBlog(prevState => prevState.filter(item => item._id !== article._id));
-      }, animationTime);
-    } else {
-      // get error message from response body or default to response status
-      const data = await response.json()
-      setErrorMessage(`${response.status} error: ${data.error}`);
-      setErrorActive(true);
-      setTimeout(() => { setErrorActive(false); }, 4000);
-    }
-  }
-
   useEffect(() => {
     if (dialogResponse === true) {
       setinAnimation(false);
-      handleDeleteArticle();
+      handleDeleteArticle(article?._id);
       setDialogOpen(false);
       setDialogResponse(null);
     } else if (dialogResponse === false) {
       setDialogOpen(false);
       setDialogResponse(null);
     }
-  }, [dialogResponse])
+  }, [dialogResponse, handleDeleteArticle, article])
 
   let date;
   if (article?.publishDate) {
@@ -77,7 +50,7 @@ function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true
       <CSSTransition
         in={inAnimation}
         nodeRef={articleRef}
-        timeout={animationTime}
+        timeout={500}
         classNames="grow"
         unmountOnExit
         appear
@@ -104,7 +77,7 @@ function ArticlePreview({ include_fancy_link = false, article, edit_enabled=true
           </span>
           }
             <ReactMarkdown className="markdown-content">{article?.preview}</ReactMarkdown>
-            <NavLink to={`/blog/${(article.title).replace(/\s+/g, '-').toLowerCase()}`}>View article</NavLink>
+            <NavLink to={`/blog/${article?.relativePath}`}>View article</NavLink>
             {include_fancy_link === true && <NavLink to="/blog" className="fancy-link">See all articles</NavLink>}
         </article>
       </CSSTransition>

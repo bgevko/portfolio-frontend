@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown'
-import rehypeRaw from 'rehype-raw'
 import { GlobalContext } from '../GlobalContext';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {a11yDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -29,9 +28,9 @@ function ViewBlogArticle( { article } ) {
   const [dialogResponse, setDialogResponse] = useState(null);
   const [formOpen, setFormOpen] = useState(false);
 
-  const { blog, updateBlog, setErrorActive, setErrorMessage, setConfirmActive, setConfirmMessage, baseUrl } = useContext(GlobalContext);
-  const redirect = useNavigate();
-  
+  const { blog, handleDeleteArticle} = useContext(GlobalContext);
+  const navigate = useNavigate();
+
   const handleEdit = () => {
     setFormOpen(true);
   }
@@ -42,35 +41,15 @@ function ViewBlogArticle( { article } ) {
 
   useEffect(() => {
     if (dialogResponse === true) {
-      handleDeleteArticle();
+      handleDeleteArticle(article?._id);
       setDialogOpen(false);
       setDialogResponse(null);
+      setTimeout(() => {navigate('/blog')}, 1000);
     } else if (dialogResponse === false) {
       setDialogOpen(false);
       setDialogResponse(null);
     }
-  }, [dialogResponse])
-
-
-  const handleDeleteArticle = async () => {
-    const response = await fetch(`${baseUrl}/blog/${article?._id}`, {
-      method: 'DELETE'
-    });
-
-    if (response.ok) {
-      updateBlog(prevState => prevState.filter(item => item._id !== article._id));
-      redirect('/blog');
-      setConfirmMessage('Article deleted.');
-      setConfirmActive(true);
-      setTimeout(() => { setConfirmActive(false) }, 3000);
-
-    } else {
-      const data = await response.json()
-      setErrorMessage(`${response.status} error: ${data.error}`);
-      setErrorActive(true);
-      setTimeout(() => { setErrorActive(false); }, 4000);
-    }
-  }
+  }, [dialogResponse, handleDeleteArticle, article, navigate])
 
   // random article logic: get random article from blog array, repeat if blog article id is the same as the current article id
   let randomArticle;
