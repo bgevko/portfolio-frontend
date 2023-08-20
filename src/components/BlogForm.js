@@ -60,6 +60,7 @@ function BlogForm({ formOpen, setFormOpen, article}) {
       if (response.status === 201) {
         // Use json data from response to update blog state
         const newArticle = await response.json();
+        console.log(newArticle)
         updateBlog(prevState => [newArticle, ...prevState]);
         setFormOpen(false);
         resetForm();

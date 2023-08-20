@@ -36,6 +36,7 @@ function App() {
   
   // set url based on whether MODE is production or development
   const baseUrl = process.env.REACT_APP_API_URL
+  // const baseUrl = "http://localhost:3000"
   
   const getBlog = useCallback(async () => {
     const response = await fetch(`${baseUrl}/blog`)
