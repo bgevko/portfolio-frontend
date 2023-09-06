@@ -33,14 +33,15 @@ function EditPanel({article, setIsVisible}) {
   }
 
   return (
-    <span className="article-edit-btns">
-      <button type="button" className='icon-btn edit-icon-btn' aria-label='Edit blog post' onClick={handleEdit}>
-        <img src={edit_icon} alt="edit icon" />
-      </button>
-      <button type="button" className='icon-btn delete-icon-btn' aria-label='Delete blog post' onClick={handleDelete}>
-        <img src={delete_icon} alt="delete icon" />
-      </button>
-    </span>
+    <></>
+    // <span className="article-edit-btns">
+    //   <button type="button" className='icon-btn edit-icon-btn' aria-label='Edit blog post' onClick={handleEdit}>
+    //     <img src={edit_icon} alt="edit icon" />
+    //   </button>
+    //   <button type="button" className='icon-btn delete-icon-btn' aria-label='Delete blog post' onClick={handleDelete}>
+    //     <img src={delete_icon} alt="delete icon" />
+    //   </button>
+    // </span>
   )
 }
 

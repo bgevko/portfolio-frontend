@@ -41,7 +41,7 @@ function ArticlePreview({ link_to_blog = false, article, edit_enabled=true}) {
               })
             }
           </span>
-          {/* <EditPanel article={article} setIsVisible={setIsVisible}/> */}
+          <EditPanel article={article} setIsVisible={setIsVisible}/>
             <ReactMarkdown className="markdown-content">{article?.preview}</ReactMarkdown>
             <NavLink to={`/blog/${article?.relativePath}`}>View article</NavLink>
             {link_to_blog === true && <NavLink to="/blog" className="fancy-link">See all articles</NavLink>}
