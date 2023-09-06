@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import home_icon from '../icons/home-icon.svg'
 import blog_icon from '../icons/blog-icon.svg'
 import contact_icon from '../icons/contact-icon.svg'
-import order_icon from '../icons/order-icon.svg'
 import gallery_icon from '../icons/gallery-icon.svg'
 
 // Change the function names and links
@@ -19,14 +18,11 @@ function MobileNav() {
       <NavLink to="/blog" aria-label="Link to blog page">
         <img src={blog_icon} alt="blog icon mobile" />
       </NavLink>
+      <NavLink to="/projects" aria-label="Link to gallery page">
+        <img src={gallery_icon} alt="gallery icon mobile" />
+      </NavLink>
       <NavLink to="/contact" aria-label="Link to contact page">
         <img src={contact_icon} alt="contact icon mobile" />
-      </NavLink>
-      <NavLink to="/order" aria-label="Link to order page">
-        <img src={order_icon} alt="order icon mobile" />
-      </NavLink>
-      <NavLink to="/gallery" aria-label="Link to gallery page">
-        <img src={gallery_icon} alt="gallery icon mobile" />
       </NavLink>
     </nav>
   );

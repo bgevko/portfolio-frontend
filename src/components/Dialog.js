@@ -1,31 +1,34 @@
 import React, {useRef, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import ScrimOverlay from '../components/ScrimOverlay'
 
-function Dialog({ title, message, active, setResponse}) {
+import { setDialogConfirmed, setDialogCancelled } from '../slices/appSlice';
+function Dialog({ active }) {
   const dialogRef = useRef(null);
+  const state = useSelector(state => state.app);
+  const dispatch = useDispatch();
 
   const handleCancel = () => {
-    setResponse(false);
+    dispatch(setDialogCancelled())
   }
 
-  const handleProceed = () => {
-    setResponse(true);
+  const handleConfirm = () => {
+    dispatch(setDialogConfirmed())
   }
-
   const handleKeyPress = (e) => {
     if (e.key === 'Escape') {
-      setResponse(false);
+      handleCancel()
     } else if (e.key === 'Enter') {
-      setResponse(true);
+      handleConfirm()
     }
   }
 
   useEffect(() => {
-    if (active) {
+    if (state.dialogOpen) {
       dialogRef.current.focus();
     }
-  }, [active])
+  }, [state.dialogOpen])
 
   const dialogBox = (
     <div 
@@ -59,7 +62,7 @@ function Dialog({ title, message, active, setResponse}) {
           fontFamily: 'Roboto, sans-serif',
           lineHeight: '32px'
         }}>
-          {title}
+          {state.dialogTitle}
       </h3>
 
       <p
@@ -71,7 +74,7 @@ function Dialog({ title, message, active, setResponse}) {
           fontFamily: 'Roboto, sans-serif',
           letterSpacing: '0.25px'
         }}>
-          {message}
+          {state.dialogMessage}
         </p>
       <span style={{
         height: '40px',
@@ -81,7 +84,7 @@ function Dialog({ title, message, active, setResponse}) {
         marginTop: 'auto'
       }}>
         <button className='dialog-btn' id="cancel-btn" onClick={handleCancel}>CANCEL</button>
-        <button className='dialog-btn' id="confirm-btn" onClick={handleProceed}>PROCEED</button>
+        <button className='dialog-btn' id="confirm-btn" onClick={handleConfirm}>PROCEED</button>
       </span>
     </div>
   )

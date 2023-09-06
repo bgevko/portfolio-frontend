@@ -1,17 +1,19 @@
-import React, {useState, useContext } from 'react';
-import { GlobalContext } from '../GlobalContext';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Section from '../components/Section';
+import { useSendContactFormMutation } from '../features/api/apiSlice';
+import { useNotification } from '../hooks/useNotification';
+
+import Loading from '../components/Loading';
 
 function ContactPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
-    const [contactMethod, setContactMethod] = useState('');
-    const [contactTime, setContactTime] = useState([]);
 
-    const { setErrorMessage, setErrorActive, setConfirmMessage, setConfirmActive, scrollToTop, baseUrl } = useContext(GlobalContext);
+    const [sendContactForm, { isLoading, error, data }] = useSendContactFormMutation();
+    const { confirm } = useNotification();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -22,44 +24,14 @@ function ContactPage() {
             email: email,
             subject: subject,
             message: message,
-            contactMethod: contactMethod,
-            contactTime: contactTime
         };
 
-        // send a POST request to /contact
         try {
-            const response = await fetch(baseUrl + '/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                navigate('/');
-                // Scroll to top of page
-                window.scrollTo(0,0)
-                scrollToTop()
-                setConfirmMessage('Message sent successfully!');
-                setConfirmActive(true);
-                // timer
-                setTimeout(() => {setConfirmActive(false)}, 3000);
-
-            } else {
-                const data = await response.json();
-                setErrorMessage(`${response.status} error: ${data.error}`);
-                setErrorActive(true);
-                setTimeout(() => {setErrorActive(false)}, 4000);
-            }
+            await sendContactForm(formData).unwrap();
+            navigate('/');
+            confirm("Message sent.");
         } catch (err) {
-            setErrorMessage(err.message)
-            setErrorActive(true);
-
-            // timer
-            setTimeout(() => {
-                setErrorActive(false);
-            }, 4000);
+            console.log(err);
         }
     }
 
@@ -67,27 +39,28 @@ function ContactPage() {
         <>
         <Section id="contact-section">
             <header>
-                <div>
-                    <h2>How Can I Help You?</h2>
+                <div className='alignment-container'>
+                    <h2>Contact me</h2>
                     <p>Share your thoughts below.</p>
                 </div>
             </header>
             <article>
+                {isLoading && <Loading />}
+                {!isLoading &&
                 <form onSubmit={handleSubmit}>
                     <fieldset>
-                        <legend>Personal Information</legend>
-                        <label htmlFor="full-name" className="required">Full name</label>
+                        <legend>Your contact information</legend>
+                        <label htmlFor="full-name">Name</label>
                         <input
                             type="text"
                             autoFocus
-                            placeholder="First Last"
+                            placeholder="Name"
                             size="30"
                             maxLength="100"
                             id="full-name"
                             name="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            required
                         />
 
                         <label htmlFor="email" className="required">Email</label>
@@ -104,13 +77,19 @@ function ContactPage() {
                         />
                     </fieldset>
                     <fieldset>
-                        <legend>Reason For Contact</legend>
+                        <legend>How can I help you?</legend>
                         <label htmlFor="subject" className="required">Subject</label>
-                        <select name="subject" id="subject" onChange={(e) => setSubject(e.target.value)}>
-                            <option value="question">Question</option>
-                            <option value="feedback">Feedback</option>
-                            <option value="other">Other</option>
-                        </select>
+                        <input
+                            type="text"
+                            placeholder="Question, feedback, etc."
+                            size="30"
+                            maxLength="100"
+                            id="subject"
+                            name="subject"
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
+                            required
+                        />
 
                         <label htmlFor="message" className="required">Message</label>
                         <textarea
@@ -123,88 +102,9 @@ function ContactPage() {
                             required
                         ></textarea>
                     </fieldset>
-                    <fieldset>
-                        <legend>How Can I Reach You?</legend>
-                        <h5>Preferred Contact Method</h5>
-
-                        <span>
-                            <label htmlFor="email-radio">Email</label>
-                            <input
-                                type="radio"
-                                id="email-radio"
-                                name="contact-method"
-                                value="email"
-                                checked={contactMethod === 'email'}
-                                onChange={(e) => setContactMethod(e.target.value)}
-                            />
-                        </span>
-                        <span>
-                            <label htmlFor="phone-radio">Phone</label>
-                            <input
-                                type="radio"
-                                id="phone-radio"
-                                name="contact-method"
-                                value="phone"
-                                checked={contactMethod === 'phone'}
-                                onChange={(e) => setContactMethod(e.target.value)}
-                            />
-                        </span>
-
-                        <h5>Preferred Contact Time</h5>
-                        <span>
-                            <label htmlFor="morning-checkbox">Morning</label>
-                            <input
-                                type="checkbox"
-                                id="morning-checkbox"
-                                name="contact-time"
-                                value="morning"
-                                checked={contactTime.includes('morning')}
-                                onChange={(e) => {
-                                    if (e.target.checked) {
-                                        setContactTime([...contactTime, e.target.value]);
-                                    } else {
-                                        setContactTime(contactTime.filter((time) => time !== e.target.value));
-                                    }
-                                }}
-                            />
-                        </span>
-                        <span>
-                            <label htmlFor="afternoon-checkbox">Afternoon</label>
-                            <input
-                                type="checkbox"
-                                id="afternoon-checkbox"
-                                name="contact-time"
-                                value="afternoon"
-                                checked={contactTime.includes('afternoon')}
-                                onChange={(e) => {
-                                    if (e.target.checked) {
-                                        setContactTime([...contactTime, e.target.value]);
-                                    } else {
-                                        setContactTime(contactTime.filter((time) => time !== e.target.value));
-                                    }
-                                }}
-                            />
-                        </span>
-                        <span>
-                            <label htmlFor="evening-checkbox">Evening</label>
-                            <input
-                                type="checkbox"
-                                id="evening-checkbox"
-                                name="contact-time"
-                                value="evening"
-                                checked={contactTime.includes('evening')}
-                                onChange={(e) => {
-                                    if (e.target.checked) {
-                                        setContactTime([...contactTime, e.target.value]);
-                                    } else {
-                                        setContactTime(contactTime.filter((time) => time !== e.target.value));
-                                    }
-                                }}
-                            />
-                        </span>
-                    </fieldset>
                     <input type="submit" value="Submit" />
                 </form>
+                }
             </article>
             </Section>
         </>

@@ -39,6 +39,149 @@
 
 /*  ----- Global -----  */
 
+/* Resizable window icons */
+  .resizable-window-top-bar:hover, .resizable-window-bottom-bar:hover {
+    cursor: ns-resize;
+  }
+
+  .resizable-window-right-bar:hover, .resizable-window-left-bar:hover {
+    cursor: ew-resize;
+  }
+
+  .resize-disabled {
+    cursor: default !important;
+  }
+
+/*-*/
+
+/* SHELL */
+#shell > * {
+  font-family: "Monaco", monospace;
+  font-size: 14px;
+}
+
+#shell {
+  border-radius: 10px;
+  background-color: #1b1b1bfa;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 8px;
+  padding-bottom: 0;
+  z-index: 100;
+}
+
+#shell-header {
+  width: calc(100% + 16px);
+  height: 30px;
+  background-color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  margin: -8px -8px 0 -8px;
+}
+
+#shell-close-btn {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #6a3434a6;
+  transition: background-color 0.2s ease-in-out;
+  margin: 0 8px;
+  z-index: 2;
+}
+
+#shell-close-btn:hover {
+  background-color: red;
+}
+
+#shell-content {
+  color: #56FE07;
+  width: 100%;
+  height: 100%;
+  padding-top: 4px;
+  overflow-y: scroll;
+  overflow-x: wrap;
+}
+
+.shell-line > p {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.shell-line {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.shell-input {
+  caret-shape: block;
+  caret-color: transparent;
+}
+
+.red {
+  color: rgb(247, 162, 145)
+}
+
+.green {
+  color: #56FE07;
+}
+
+.yellow {
+  color: #fffaa4;
+}
+
+.blue {
+  color: #00fafa;
+}
+
+.purple {
+  color: #f200ff !important;
+}
+
+.white {
+  color: #f1f1f1 !important;
+}
+
+/* create a block caret after the input */
+.caret-block {
+  width: fit-content;
+  height: 16px;
+  outline: 1px solid #56FE07;
+  font-weight: 600;
+
+}
+
+#shell-content:focus .caret-block {
+  width: fit-content;
+  height: 16px;
+  background-color: #56FE07;
+  color: rgb(54, 78, 54);
+}
+
+#shell-content:focus .caret-blink{
+  animation: blink 1s step-end infinite;
+}
+
+
+@keyframes blink {
+  0%, 100% { 
+    background-color:  #56FE07;
+    color: rgb(54, 78, 54);
+  }
+  50% { 
+    background-color:  #55fe0700;
+    outline: 1px solid transparent;
+    color: inherit;
+  }
+}
+/*-*/
+
 /* BUTTONS ----------------- */
   button {
     border: none;
@@ -300,7 +443,7 @@ main {
   transform: translateX(-50%);
 }
 
-div:not(#root, #scrim-overlay, .card, .gallery-column) {
+div.alignment-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1142,7 +1285,7 @@ article > a {
   }
 
   body {
-    max-width: 1300px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 15px;

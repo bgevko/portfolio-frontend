@@ -1,20 +1,26 @@
-import { React, useRef} from 'react';
+import { React, useRef, useState} from 'react';
 import selfie from '../images/selfie.webp'
 import MoreContent from '../components/MoreContent';
-import ArticlePreview from '../components/ArticlePreview';
+import ArticlePreview from '../features/blog/ArticlePreview';
 import Section from '../components/Section';
+import Loading from '../components/Loading';
 import { CSSTransition } from 'react-transition-group';
+import { useGetLatestArticleQuery } from '../slices/blogApiSlice';
 
-
-function HomePage( { article } ) {
+function HomePage() {
     const heroRef = useRef(null);
     const headlineRef = useRef(null);
+
+    const { data, isLoading, isSuccess, isError, error } = useGetLatestArticleQuery()
+
+    let article = null
+    if (isSuccess) article = data.entities[data.ids[0]]
 
     return (
         <>
             <Section id="intro-section">
                 <header>
-                    <div>
+                    <div className='alignment-container'>
                         <CSSTransition
                             in={true}
                             nodeRef={heroRef}
@@ -43,20 +49,18 @@ function HomePage( { article } ) {
                 </header>
                 <article id="intro-article">
                     <h3>WELCOME TO MY HOME PAGE</h3>
-                    <p>I’m a Computer Science student at Oregon State University. I love technology, and my primary interests are web development, mobile development, UI/UX design, graphics programming, digital signal processing, machine learning, and game development. </p>
+                    <p>After dedicating years to the Marine Corps, I pivoted my career towards an enduring passion—technology. Now, at the age of 31, I'm immersed in Computer Science studies at Oregon State University, aiming to fulfill my aspiration of becoming a software developer. This website is my digital workshop, where I fine-tune my web development skills and catalog my broader technical pursuits. </p>
                     
-                    <p>I designed this site in Figma and brought it to life using React, Node, Express, and MongoDB. My goal was to have a visually appealing and functional website accessible and responsive on all devices. I implemented a basic markdown content management system that allows me to add, edit, and remove blog posts directly with my custom UI, which I built from scratch.</p>
+                    <p>I designed every element myself in Figma, eventually transitioning from concept to fully interactive React components. The Blog section offers articles, technical notes, and snippets — readily filtered by tag or keyword. The Projects section provides a curated selection of my technical endeavors, categorized by the technologies I employed. </p>
 
-                    <p>My primary career goal is to graduate and then find work in one of the fields that I listed above. I think having diverse exposure to different aspects of technology is a crucial part of any Computer Science curriculum. I love learning, and I hope that my curiosity will guide me to a fruitful software developer career. </p>
+                    <p>If you'd like to connect, you can reach me through the Contact section. Thank you for stopping by. </p>
                         
-                    <p>Thanks for visiting my website!</p>
                 </article>
             </Section>
-            { article &&
-            <MoreContent section_title="LATEST BLOG POST">
-                <ArticlePreview article={article} include_fancy_link={true} edit_enabled={false}/>
-            </MoreContent>
-            }
+            {isLoading && <Loading/>}
+            {isSuccess && <MoreContent section_title="LATEST BLOG POST">
+                <ArticlePreview article={article} link_to_blog={true} edit_enabled={true}/>
+            </MoreContent>}
         </>
     );
 }
