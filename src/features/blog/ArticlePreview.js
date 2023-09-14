@@ -1,16 +1,15 @@
-import React, { useRef, useState }from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { format } from 'date-fns';
 
 //components
-import EditPanel from './EditPanel';
 import ReactMarkdown from 'react-markdown'
 
-function ArticlePreview({ link_to_blog = false, article, edit_enabled=true}) {
+function ArticlePreview({ link_to_blog = false, article, edit_enabled = true }) {
   const articleRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
-  
+
   let date
   if (article) {
     date = format(new Date(article.publishDate), 'MMMM dd, yyyy')
@@ -31,7 +30,7 @@ function ArticlePreview({ link_to_blog = false, article, edit_enabled=true}) {
           <span className="date-time">
             <p className="publish-date">
               {date}
-              </p>
+            </p>
             <p>{`${article?.readTime} min read`}</p>
           </span>
           <span className="article-tags">
@@ -41,10 +40,9 @@ function ArticlePreview({ link_to_blog = false, article, edit_enabled=true}) {
               })
             }
           </span>
-          <EditPanel article={article} setIsVisible={setIsVisible}/>
-            <ReactMarkdown className="markdown-content">{article?.preview}</ReactMarkdown>
-            <NavLink to={`/blog/${article?.relativePath}`}>View article</NavLink>
-            {link_to_blog === true && <NavLink to="/blog" className="fancy-link">See all articles</NavLink>}
+          <ReactMarkdown className="markdown-content">{article?.preview}</ReactMarkdown>
+          <NavLink to={`/blog/${article?.relativePath}`}>View article</NavLink>
+          {link_to_blog === true && <NavLink to="/blog" className="fancy-link">See all articles</NavLink>}
         </article>
       </CSSTransition>
     </>

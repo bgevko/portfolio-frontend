@@ -7,7 +7,6 @@ const appSlice = createSlice({
   initialState: {
     isLoggedIn: false,
     username: '',
-    isAdmin: false,
     errorMessage: '',
     errorActive: false,
     errorTimeout: 4000,
@@ -17,9 +16,9 @@ const appSlice = createSlice({
     dialogOpen: false,
     dialogTitle: '',
     dialogMessage: '',
-    dialogStateOptions: {CONFIRM: 'CONFIRM', CANCEL: 'CANCEL', CLOSED: 'CLOSED'},
+    dialogStateOptions: { CONFIRM: 'CONFIRM', CANCEL: 'CANCEL', CLOSED: 'CLOSED' },
     dialogState: 'CLOSED',
-    
+
   },
   reducers: {
     enterLoggedIn: (state) => {
@@ -30,12 +29,6 @@ const appSlice = createSlice({
     },
     setUsername: (state, action) => {
       state.username = action.payload
-    },
-    enterIsAdmin: (state) => {
-      state.isAdmin = true
-    },
-    exitIsAdmin: (state) => {
-      state.isAdmin = false
     },
     setErrorMessage: (state, action) => {
       state.errorMessage = action.payload
@@ -83,7 +76,7 @@ const appSlice = createSlice({
 export const appSelector = createSelector(state => state.app, app => app)
 
 // Export the actions
-export const { enterLoggedIn, exitLoggedIn, setUsername, enterIsAdmin, exitIsAdmin, setErrorMessage, enterErrorActive, exitErrorActive, setConfirmMessage, enterConfirmActive, exitConfirmActive, scrollToTop, setDialogTitle, setDialogMessage, setDialogConfirmed, setDialogCancelled, setDialogClosed, openDialog, closeDialog } = appSlice.actions
+export const { enterLoggedIn, exitLoggedIn, setUsername, setErrorMessage, enterErrorActive, exitErrorActive, setConfirmMessage, enterConfirmActive, exitConfirmActive, scrollToTop, setDialogTitle, setDialogMessage, setDialogConfirmed, setDialogCancelled, setDialogClosed, openDialog, closeDialog } = appSlice.actions
 
 // Export the reducer
 export default appSlice.reducer

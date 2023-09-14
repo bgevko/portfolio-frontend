@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown'
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {a11yDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { format } from 'date-fns';
 
-import { useGetArticleByPathQuery, useGetRandomArticleQuery} from '../../slices/blogApiSlice';
+import { useGetArticleByPathQuery, useGetRandomArticleQuery } from '../../slices/blogApiSlice';
 
 // component imports
 import MoreContent from '../../components/MoreContent';
@@ -21,21 +21,20 @@ import reddit_icon from '../../icons/reddit-icon.svg'
 import email_icon from '../../icons/email-icon2.svg'
 import whatsapp_icon from '../../icons/whatsapp-icon.svg'
 import url_copy_icon from '../../icons/copy-url-icon.svg'
-import EditPanel from './EditPanel';
 
 function ViewBlogArticle() {
   const { article_title } = useParams();
   const [isVisible, setIsVisible] = useState(true);
 
-  const { 
-    data: articleData, 
-    isLoading: articleIsLoading, 
+  const {
+    data: articleData,
+    isLoading: articleIsLoading,
     isSuccess: articleIsSuccess } = useGetArticleByPathQuery(article_title)
 
-  const { 
-    data: nextArticleData, 
-    isLoading: nextArticleIsLoading, 
-    isSuccess: nextArticleIsSuccess} = useGetRandomArticleQuery({exclude: articleData?.ids[0]})
+  const {
+    data: nextArticleData,
+    isLoading: nextArticleIsLoading,
+    isSuccess: nextArticleIsSuccess } = useGetRandomArticleQuery({ exclude: articleData?.ids[0] })
 
   const article = articleData?.entities[articleData?.ids[0]]
   const nextArticle = nextArticleData?.entities[nextArticleData?.ids[0]]
@@ -54,15 +53,15 @@ function ViewBlogArticle() {
   }, [])
 
   const Heading = useMemo(() => {
-    return ({level, children}) => {
+    return ({ level, children }) => {
       const text = children.reduce((text, child) => (typeof child === 'string' ? text + child : text), '');
       const slug = createSlug(text);
-      return React.createElement('h' + level, {id: slug}, children)
+      return React.createElement('h' + level, { id: slug }, children)
     }
   }, [createSlug])
 
   const CodeBlock = useMemo(() => {
-    return ({language, value}) => {
+    return ({ language, value }) => {
       return (
         <SyntaxHighlighter style={a11yDark} language={language} PreTag="div" children={value} />
       )
@@ -83,10 +82,10 @@ function ViewBlogArticle() {
   }
 
   return (
-  <>
-    {articleIsLoading && <Loading />}
-    {articleIsSuccess &&
-      <section id="blog-section">
+    <>
+      {articleIsLoading && <Loading />}
+      {articleIsSuccess &&
+        <section id="blog-section">
           <header>
             <div className='alignment-container'>
               <h2>{article?.title}</h2>
@@ -101,7 +100,6 @@ function ViewBlogArticle() {
                   })
                 }
               </span>
-              <EditPanel article={article} setIsVisible={setIsVisible}/>
               <span className="share-buttons">
                 <button className="share-icon" aria-label="Share on Facebook">
                   <img src={fb_icon} alt="Facebook icon" />
@@ -156,7 +154,7 @@ function ViewBlogArticle() {
                 h4: Heading,
                 h5: Heading,
                 h6: Heading,
-                code: ({node, inline, className, children, ...props}) => {
+                code: ({ node, inline, className, children, ...props }) => {
                   const match = /language-(\w+)/.exec(className || '');
                   return !inline && match ? (
                     <CodeBlock language={match[1]} value={String(children).replace(/\n$/, '')} {...props} />
@@ -167,17 +165,17 @@ function ViewBlogArticle() {
                   );
                 },
               }}
-              />
+            />
           </article>
-      </section>
-    }
-    {nextArticleIsLoading && <Loading />}
-    {nextArticleIsSuccess &&
-      <MoreContent section_title="YOU MAY ALSO LIKE">
-        <ArticlePreview article={nextArticle} include_fancy_link={true}/>
-      </MoreContent>
-    }
-  </>
+        </section>
+      }
+      {nextArticleIsLoading && <Loading />}
+      {nextArticleIsSuccess &&
+        <MoreContent section_title="YOU MAY ALSO LIKE">
+          <ArticlePreview article={nextArticle} include_fancy_link={true} />
+        </MoreContent>
+      }
+    </>
   );
 }
 

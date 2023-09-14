@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { useSelector, useDispatch } from 'react-redux';
-import { observeShellWidth, observeShellHeight } from '../slices/shellSlice';
 function ResizableWindow({
   style,
   id,
@@ -21,15 +20,14 @@ function ResizableWindow({
   const [initialMousePos, setInitialMousePos] = useState(0)
 
   const windowRef = useRef(null)
-  const state = useSelector((state) => state.shell)
   const dispatch = useDispatch()
   const resizeHandleWidth = handleWidth || 10
   const zIndex = zValue || 2
-  
+
   const windowStyle = {
     ...style,
-    width: `${state.shellWidth}px`,
-    height: `${state.shellHeight}px`,
+    width: "600px"
+    height: "400px"
     position: 'absolute',
     zIndex: `${zIndex}`
   }
@@ -88,7 +86,6 @@ function ResizableWindow({
         windowRef.current.style.height = `${newHeight}px`
         windowRef.current.style.top = `${windowRef.current.offsetTop - heightDiff}px`
         setInitialMousePos(e.clientY)
-        dispatch(observeShellHeight(newHeight))
       }
     }
 
@@ -98,7 +95,6 @@ function ResizableWindow({
         const newWidth = windowRef.current.offsetWidth + widthDiff
         windowRef.current.style.width = `${newWidth}px`
         setInitialMousePos(e.clientX)
-        dispatch(observeShellWidth(newWidth))
       }
     }
 
@@ -108,7 +104,6 @@ function ResizableWindow({
         const newHeight = windowRef.current.offsetHeight + heightDiff
         windowRef.current.style.height = `${newHeight}px`
         setInitialMousePos(e.clientY)
-        dispatch(observeShellHeight(newHeight))
       }
     }
 
@@ -119,7 +114,6 @@ function ResizableWindow({
         windowRef.current.style.width = `${newWidth}px`
         windowRef.current.style.left = `${windowRef.current.offsetLeft - widthDiff}px`
         setInitialMousePos(e.clientX)
-        dispatch(observeShellWidth(newWidth))
       }
     }
 
@@ -142,7 +136,7 @@ function ResizableWindow({
     // disable dragging when mouse is released
     const handleMouseUp = () => disableDragging();
     document.addEventListener('mouseup', handleMouseUp);
-  
+
     return () => {
       document.removeEventListener('mouseup', handleMouseUp);
     };
@@ -162,35 +156,35 @@ function ResizableWindow({
     <Draggable
       handle='#drag-area'
     >
-    <div id={id} className={`resizable-window ${className}`} ref={windowRef} style={windowStyle}>
+      <div id={id} className={`resizable-window ${className}`} ref={windowRef} style={windowStyle}>
 
-      <div id='drag-area' style={dragArea}></div>
-      <div 
-        className={`resizable-window-top-bar ${topDisabled ? 'resize-disabled' : ''}`}
-        onMouseDown={(e) =>{ setDraggingTop(true); setInitialMousePos(e.clientY) }}
-        style={topBar}>
+        <div id='drag-area' style={dragArea}></div>
+        <div
+          className={`resizable-window-top-bar ${topDisabled ? 'resize-disabled' : ''}`}
+          onMouseDown={(e) => { setDraggingTop(true); setInitialMousePos(e.clientY) }}
+          style={topBar}>
+        </div>
+
+        <div
+          className={`resizable-window-right-bar ${rightDisabled ? 'resize-disabled' : ''}`}
+          onMouseDown={(e) => { setDraggingRight(true); setInitialMousePos(e.clientX) }}
+          style={rightBar}>
+        </div>
+
+        <div
+          className={`resizable-window-bottom-bar ${bottomDisabled ? 'resize-disabled' : ''}`}
+          onMouseDown={(e) => { setDraggingBottom(true); setInitialMousePos(e.clientY) }}
+          style={bottomBar}>
+        </div>
+
+        <div
+          className={`resizable-window-left-bar ${topDisabled ? 'resize-disabled' : ''}`}
+          onMouseDown={(e) => { setDraggingLeft(true); setInitialMousePos(e.clientX) }}
+          style={leftBar}>
+        </div>
+
+        {children}
       </div>
-
-      <div 
-        className={`resizable-window-right-bar ${rightDisabled ? 'resize-disabled' : ''}`}
-        onMouseDown={(e) =>{ setDraggingRight(true); setInitialMousePos(e.clientX) }}
-        style={rightBar}>
-      </div>
-
-      <div
-        className={`resizable-window-bottom-bar ${bottomDisabled ? 'resize-disabled' : ''}`}
-        onMouseDown={(e) =>{ setDraggingBottom(true); setInitialMousePos(e.clientY) }}
-        style={bottomBar}>
-      </div>
-
-      <div
-        className={`resizable-window-left-bar ${topDisabled ? 'resize-disabled' : ''}`}
-        onMouseDown={(e) =>{ setDraggingLeft(true); setInitialMousePos(e.clientX) }}
-        style={leftBar}>
-      </div>
-
-      {children}
-    </div>
     </Draggable>
   );
 }

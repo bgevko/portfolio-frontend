@@ -19,21 +19,21 @@ const useBlog = () => {
       dispatch(enterBlogLoading())
       const response = await fetch(`${baseUrl}/blog`)
       const data = await response.json()
-    
+
       if (response.ok) {
         dispatch(dispatch(setBlog(data)))
-        
+
       } else {
         error('Error connecting to the server')
       }
       dispatch(exitBlogLoading())
-      } catch (err) {
-        error('Error connecting to the server')
-      }
-    }, [baseUrl])
-  
+    } catch (err) {
+      error('Error connecting to the server')
+    }
+  }, [baseUrl])
+
   // GET LATEST ARTICLE
-  const getLatestArticle = useCallback(async() => {
+  const getLatestArticle = useCallback(async () => {
     try {
       const response = await fetch(`${baseUrl}/blog/latest`)
       const data = await response.json()
@@ -41,17 +41,15 @@ const useBlog = () => {
         dispatch(setLatestArticle(data))
       } else {
         error(`${response.status} error: ${data.error}`);
-      } 
-    } catch (err) {
-        error(`Error: ${err}`)
       }
+    } catch (err) {
+      error(`Error: ${err}`)
+    }
   }, [baseUrl])
-  
+
 
   // DELETE ARTICLE
-  const deleteArticle = async(article_id) => {
-    // if (!appState.isAdmin) return error('You must be logged in as an admin to delete articles.');
-
+  const deleteArticle = async (article_id) => {
     const response = await fetch(`${baseUrl}/blog/${article_id}`, {
       method: 'DELETE',
       headers: {
@@ -78,11 +76,11 @@ const useBlog = () => {
   }
 
   // CREATE ARTICLE
-  const createArticle = async(formData) => {
+  const createArticle = async (formData) => {
     const response = await fetch(baseUrl + '/blog', {
       method: 'post',
       body: JSON.stringify(formData),
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token') || ''
       }
@@ -98,18 +96,18 @@ const useBlog = () => {
         dispatch(setArticleVisible(newArticle._id, true))
       }, 500)
     } else {
-        const statusCode = response.status;
-        const errorMessage = await response.json()
-        error(`Error ${statusCode}: ${errorMessage.error}`);
+      const statusCode = response.status;
+      const errorMessage = await response.json()
+      error(`Error ${statusCode}: ${errorMessage.error}`);
     }
   }
 
   // UPDATE ARTICLE
-  const updateArticle = async(formData, article) => {
+  const updateArticle = async (formData, article) => {
     const response = await fetch(`${baseUrl}/blog/${article?._id}`, {
       method: 'PUT',
       body: JSON.stringify(formData),
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token') || '',
       }
