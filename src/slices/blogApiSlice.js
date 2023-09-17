@@ -74,41 +74,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         ...(result?.ids ? result.ids.map(id => ({type: 'Blog', id})) : [])
       ]
     }),
-
-    addArticle: builder.mutation({
-      query: (article) => ({
-        url: '/blog',
-        method: 'POST',
-        body: article,
-      }),
-      invalidatesTags: [ {type: 'Blog', id: 'ARTICLES'} ],
-    }),
-
-    updateArticle: builder.mutation({
-      query: (article) => ({
-        url: `/blog/${article._id}`,
-        method: 'PUT',
-        body: article,
-      }),
-      invalidatesTags: (result, error, arg) => [
-        {type: 'Blog', id: arg._id},
-      ]
-    }),
-
-    deleteArticle: builder.mutation({
-      query: (article) => ({
-        url: `/blog/${article._id}`,
-        method: 'DELETE',
-        body: article,
-      }),
-      invalidatesTags: (result, error, arg) => [
-        {type: 'Blog', id: arg._id},
-      ]
-    }),
   }),
 })
 
-export const { useGetArticlesQuery, useGetArticleByIdQuery, useGetArticleByPathQuery, useGetLatestArticleQuery, useGetRandomArticleQuery, useAddArticleMutation, useUpdateArticleMutation, useDeleteArticleMutation } = extendedApiSlice
+export const { useGetArticlesQuery, useGetArticleByIdQuery, useGetArticleByPathQuery, useGetLatestArticleQuery, useGetRandomArticleQuery, } = extendedApiSlice
 
 // Selectors
 export const selectArticlesResult = extendedApiSlice.endpoints.getArticles.select()
