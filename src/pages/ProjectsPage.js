@@ -6,10 +6,17 @@ import { GlobalContext } from '../GlobalContext';
 // Photos
 import bioSite from '../images/bio-site.png';
 import webTool from '../images/data-generator-desktop-ui.png'
-import qrTracker from '../images/qr-tracker.png'
-import webDesign from '../images/web-design.png'
+import cmdTool from '../images/cmdline.webp'
 
 const projectItems = [
+    {
+        photo: cmdTool,
+        title: "Blog CMS",
+        subtitle: "Python, Git, Markdown",
+        content: "I created a command line tool that automatically pushes my Obsidian notes to the blog on this website. I can edit my notes in Obsidian and push all the changes to the blog with a single command.",
+        actionLabel: "View Project",
+        actionUrl: 'https://github.com/bgevko/blog-cms'
+    },
     {   
         photo: bioSite,
         title: "Biology Website",
@@ -26,18 +33,6 @@ const projectItems = [
         actionLabel: "View Project",
         actionUrl: 'https://www.randomdatagen.com'
     },
-    {
-        photo: qrTracker,
-        title: "QR Tracker",
-        subtitle: "Flask and Heroku",
-        content: "I created a minimal QR code tracker for a group project using Flask and deployed it to Heroku. The tracker would update when the group's QR codes were scanned, providing real-world data we presented in our final presentation."
-    },
-    {
-        photo: webDesign,
-        title: "Author Website",
-        subtitle: "In Progress",
-        content: "I'm currently building a website for a small author using SvelteKit. I'm using Tailwind CSS for styling and SvelteKit for routing and page generation. I'm also using SvelteKit's adapter to deploy the website to Netlify."
-    }
 ]
 
 function ProjectsPage() {
