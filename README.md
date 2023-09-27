@@ -31,13 +31,12 @@
 
 # Frontend
 ## Project setup
-I used three additional libraries that were not in the assignment for the frontend. The are:
+Some notable libraries: 
 - `react-markdown`: to turn markdown text into an HTML blog post
 - `react-syntax-highlighter`: to highlight code blocks in the blog post
 - `react-transition-group`: to create basic animations for switching between pages and components
 
 ## App.js
-I'll comment on parts of the file that may not be obvious or are not in the assignment.
 
 ### States
 ```js
@@ -758,7 +757,7 @@ I used a single additional library for the backend, `xss` to sanitize user input
 Entry point for the app. The routes for my controllers are defined here. I also set up the database connection here.
 
 ## Controllers
-I have three controllers: `blogController.js`, `contactController.js`, and `orderController.js`. Each controller handles the routes and their logic, which is mostly just like the assignment example. I added an additional middleware function that helps me validate request bodies.
+I have two controllers: `blogController.js`, `contactController.js`. I added an additional middleware function that helps me validate request bodies.
 
 ## Models
 I have one model for the blog posts, `blogModel.js`. This is exactly the same model I used for the database assignment. 
