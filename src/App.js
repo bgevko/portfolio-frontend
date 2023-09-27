@@ -1,5 +1,5 @@
 
-//Components
+// Components
 import MainNav from './components/MainNav';
 import MobileNav from './components/MobileNav';
 import SiteHeader from './components/SiteHeader';
@@ -15,6 +15,10 @@ import ProjectsPage from './pages/ProjectsPage';
 
 // Routes
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Google Analytics
+import ReactGA from 'react-ga';
+ReactGA.initialize('G-B5FMH64F73');
 
 function App() {
   return (
