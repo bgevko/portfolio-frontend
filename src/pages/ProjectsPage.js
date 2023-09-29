@@ -2,6 +2,7 @@ import { React, useState} from 'react';
 import Section from '../components/Section';
 import Card from '../components/Card';
 import { GlobalContext } from '../GlobalContext';
+import ReactGA from 'react-ga4';
 
 // Photos
 import bioSite from '../images/bio-site.png';
@@ -37,6 +38,7 @@ const projectItems = [
 
 function ProjectsPage() {
     const [openCard, setOpenCard] = useState(null);
+    ReactGA.send({hitType: 'pageview', page: window.location.pathname});
     
     return (
         <>

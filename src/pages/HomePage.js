@@ -1,4 +1,4 @@
-import { React, useRef, useState} from 'react';
+import { React, useRef, useEffect} from 'react';
 import selfie from '../images/selfie.webp'
 import MoreContent from '../components/MoreContent';
 import ArticlePreview from '../features/blog/ArticlePreview';
@@ -15,7 +15,7 @@ function HomePage() {
 
     let article = null
     if (isSuccess) article = data.entities[data.ids[0]]
-
+    
     return (
         <>
             <Section id="intro-section">
