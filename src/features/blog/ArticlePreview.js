@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown'
 
 function ArticlePreview({ link_to_blog = false, article, edit_enabled = true }) {
   const articleRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible] = useState(true);
 
   let date
   if (article) {

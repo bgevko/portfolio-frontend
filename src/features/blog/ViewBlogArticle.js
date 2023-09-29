@@ -72,7 +72,8 @@ function ViewBlogArticle() {
       const slug = createSlug(text);
       return React.createElement('h' + level, { id: slug, className: `markdown-h${level}` }, children)
     }
-  }, [article])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [article, createSlug])
 
   const CodeBlock = useMemo(() => {
     return ({ language, value }) => {
@@ -113,15 +114,14 @@ function ViewBlogArticle() {
     const keys = Object.keys(hierarchy)
     const orderedHierarchy = {}
     
-    console.log(hierarchy)
     let h_level = 1
-    const HIERARCHY_MARGIN = 20
     for (let i = 0; i < keys.length; i++) {
       if (i > 0 ) {
         h_level += 1
       }
 
       let key = keys[i]
+      // eslint-disable-next-line no-loop-func
       hierarchy[key].forEach(heading => {
         heading.push(`h-${h_level}`)
         orderedHierarchy[heading[2]] = heading
@@ -130,7 +130,7 @@ function ViewBlogArticle() {
 
     const ToC = Object.values(orderedHierarchy)
     setTableOfContents(ToC)
-  }, [article])
+  }, [article, createSlug])
 
   return (
     <>
@@ -188,6 +188,7 @@ function ViewBlogArticle() {
             <nav className="article-nav">
               {
                 tableOfContents?.map((headingContent, index) => {
+                  // eslint-disable-next-line no-unused-vars
                   const [navText, navId, _, className] = headingContent;
                   return (
                     <a href={`#${navId}`} key={`${navId}-${index}`} className={`${className}`}>{navText} </a>

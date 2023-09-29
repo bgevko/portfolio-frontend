@@ -47,11 +47,11 @@ const Card = ({photo, index, title, subtitle, content, actionLabel, actionUrl}) 
     if (openCard !== index) {
       setIsExpanded(false)
     }
-  }, [openCard])
+  }, [openCard, index])
 
   return (
     <div className="card">
-      <img className="card-media" src={photo_source} alt="Card Photo" />
+      <img className="card-media" src={photo_source} alt="Card media" />
       <span className="card-title">
         <h3>{title}</h3>
         <button className="chevron-button" onClick={handleExpand}>

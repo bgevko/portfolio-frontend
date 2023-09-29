@@ -1,4 +1,4 @@
-import { React, useRef, useEffect} from 'react';
+import { React, useRef } from 'react';
 import selfie from '../images/selfie.webp'
 import MoreContent from '../components/MoreContent';
 import ArticlePreview from '../features/blog/ArticlePreview';
@@ -12,7 +12,7 @@ function HomePage() {
     const heroRef = useRef(null);
     const headlineRef = useRef(null);
 
-    const { data, isLoading, isSuccess, isError, error } = useGetLatestArticleQuery()
+    const { data, isLoading, isSuccess } = useGetLatestArticleQuery()
 
     let article = null
     if (isSuccess) article = data.entities[data.ids[0]]

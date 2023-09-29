@@ -33,7 +33,7 @@ const useNotification = () => {
         setTimeout(() => { dispatch(exitConfirmActive()) }, 3000)
       }, 4000)
     }
-  }, [appState.errorActive, appState.confirmActive])
+  }, [dispatch, appState.errorActive, appState.confirmActive])
 
   return { err, confirm };
 }

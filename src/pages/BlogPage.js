@@ -9,13 +9,8 @@ import ArticlePreview from '../features/blog/ArticlePreview';
 import Section from '../components/Section';
 import Loading from '../components/Loading';
 
-// Analytics
-import ReactGA from 'react-ga4';
-
 function BlogPage() {
-  ReactGA.send({ hitType: 'pageview', page: 'https://www.bgevko.com/blog' });
-
-  const { data: articles, isLoading, isSuccess, isError, error } = useGetArticlesQuery()
+  const { data: articles, isLoading, isSuccess } = useGetArticlesQuery()
   const [searchFilter, setSearchFilter] = useState('');
   const [tagFilter, setTagFilter] = useState([]);
   const [filterOn, setFilterOn] = useState(false);

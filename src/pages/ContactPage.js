@@ -12,7 +12,7 @@ function ContactPage() {
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
 
-    const [sendContactForm, { isLoading, error, data }] = useSendContactFormMutation();
+    const [sendContactForm, { isLoading }] = useSendContactFormMutation();
     const { confirm } = useNotification();
     const navigate = useNavigate();
 
