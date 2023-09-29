@@ -18,11 +18,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Google Analytics
 import ReactGA from 'react-ga4';
-const TRACKING_ID = "G-5S9WPLXTGD"
-ReactGA.initialize( TRACKING_ID );
-ReactGA.send("pageview");
 
 function App() {
+  const TRACKING_ID = "G-5S9WPLXTGD"
+  ReactGA.initialize( TRACKING_ID );
+  ReactGA.send("pageview");
+
   return (
     <>
       <BrowserRouter>
