@@ -6,9 +6,7 @@ import Section from '../components/Section';
 import Loading from '../components/Loading';
 import { CSSTransition } from 'react-transition-group';
 import { useGetLatestArticleQuery } from '../slices/blogApiSlice';
-import ReactGA from 'react-ga4';
 
-ReactGA.send("pageview")
 
 function HomePage() {
     const heroRef = useRef(null);

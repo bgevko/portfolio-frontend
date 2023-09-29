@@ -20,6 +20,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 const TRACKING_ID = "G-5S9WPLXTGD"
 ReactGA.initialize( TRACKING_ID );
+ReactGA.send("pageview");
+
 function App() {
   return (
     <>
