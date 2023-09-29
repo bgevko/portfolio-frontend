@@ -55,7 +55,7 @@ function BlogPage() {
           <div className='alignment-container'>
             <h2>Blog Posts</h2>
             <label htmlFor="search" id="search-label">Search:</label>
-            <input type="search" id="search" name="search" aria-label="search blog posts" onChange={e => handleSearchInput(e)} />
+            <input type="search" id="search" name="search" placeholder="Search by title" aria-label="search blog posts" onChange={e => handleSearchInput(e)} />
             <span className="search-tags">
               {
                 uniqueTags.map((tag, index) => {

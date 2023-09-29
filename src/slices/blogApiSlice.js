@@ -62,11 +62,11 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       ]
     }),
 
-    getRandomArticle: builder.query({
-      query: (payload) => `/blog/random?exclude=${encodeURIComponent(payload.exclude)}`,
+    getRecommendedArticles: builder.query({
+      query: (currentArticleRelativePath) => `/blog/recommended/${currentArticleRelativePath}`,
       transformResponse: responseData => {
         if (responseData) {
-          return articleAdapter.upsertOne(initialState, responseData)
+          return articleAdapter.upsertMany(initialState, responseData)
         }
       },
       providesTags: (result, error, arg) => [
@@ -77,7 +77,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   }),
 })
 
-export const { useGetArticlesQuery, useGetArticleByIdQuery, useGetArticleByPathQuery, useGetLatestArticleQuery, useGetRandomArticleQuery, } = extendedApiSlice
+export const { useGetArticlesQuery, useGetArticleByIdQuery, useGetArticleByPathQuery, useGetLatestArticleQuery, useGetRecommendedArticlesQuery, } = extendedApiSlice
 
 // Selectors
 export const selectArticlesResult = extendedApiSlice.endpoints.getArticles.select()

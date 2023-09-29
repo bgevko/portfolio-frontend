@@ -737,23 +737,23 @@ th {
   }
 
   .markdown-content h3 {
+    margin-top: 16px;
     font-size: 24px;
   }
 
   .markdown-content h4 {
+    margin-top: 16px;
     font-size: 20px;
   }
 
   .markdown-content h5 {
+    margin-top: 16px;
     font-size: 16px;
   }
 
   .markdown-content h6 {
+    margin-top: 16px;
     font-size: 14px;
-  }
-
-  .markdown-content p {
-    margin-bottom: 1rem;
   }
 
   .markdown-content code {
@@ -763,6 +763,54 @@ th {
     padding: 2px 4px;
   }
 
+  .markdown-content ul {
+    list-style-position: inside;
+    list-style-type: square;
+  }
+
+  .markdown-content pre {
+    margin-bottom: 8px;
+  }
+ 
+  .markdown-content pre + ul {
+    margin-top: 24px;
+  }
+  .markdown-content hr + :not(h1, h2, h3, h4, h5, h6) {
+    margin-top: 16px;
+  }
+  .markdown-content p + :not(pre) {
+    margin-top: 16px;
+  }
+/*-*/
+
+/* --------- Table of Contents Hierarcy ----------*/ 
+.h-1, .h-2, .h-3, .h-4, .h-5, .h-6 {
+  font-weight: 500;
+}
+
+.h-1 {
+  margin-left: 0;
+}
+
+.h-2 {
+  margin-left: 1rem;
+}
+
+.h-3 {
+  margin-left: 2rem;
+}
+
+.h-4 {
+  margin-left: 3rem;
+}
+
+.h-5 {
+  margin-left: 4rem;
+}
+
+.h-6 {
+  margin-left: 5rem;
+}
 
 /* ------------ Mobile Typography -------------*/
 .site-name-textbox h1 {
