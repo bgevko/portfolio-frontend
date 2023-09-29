@@ -13,7 +13,7 @@ import Loading from '../components/Loading';
 import ReactGA from 'react-ga4';
 
 function BlogPage() {
-  ReactGA.send({ hitType: 'pageview', page: '/blog' });
+  ReactGA.send({ hitType: 'pageview', page: 'https://www.bgevko.com/blog' });
 
   const { data: articles, isLoading, isSuccess, isError, error } = useGetArticlesQuery()
   const [searchFilter, setSearchFilter] = useState('');
