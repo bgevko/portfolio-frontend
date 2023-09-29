@@ -19,6 +19,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Google Analytics
 import ReactGA from 'react-ga';
 ReactGA.initialize('G-B5FMH64F73');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App() {
   return (
