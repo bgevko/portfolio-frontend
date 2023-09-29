@@ -9,8 +9,12 @@ import ArticlePreview from '../features/blog/ArticlePreview';
 import Section from '../components/Section';
 import Loading from '../components/Loading';
 
+// Analytics
+import ReactGA from 'react-ga4';
 
 function BlogPage() {
+  ReactGA.send({ hitType: 'pageview', page: '/blog' });
+
   const { data: articles, isLoading, isSuccess, isError, error } = useGetArticlesQuery()
   const [searchFilter, setSearchFilter] = useState('');
   const [tagFilter, setTagFilter] = useState([]);
